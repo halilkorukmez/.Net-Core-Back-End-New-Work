@@ -11,18 +11,12 @@ namespace Entities.DTos
     public class ProductAddDto
     {
         [Required]
+        [MaxLength(30)]
+        public string Name { get; set; }
+
         public Guid Id { get; set; }
 
-
-        [DisplayName("Ürün Adı")]
-        [Required(ErrorMessage="{0} Girilmesi Zorunludur")]
-        [MaxLength(30,ErrorMessage ="{0} {1} Karakterden Büyük Olamaz")]
-        [MinLength(3,ErrorMessage ="{0} {1} Karakterden Az Olamaz")]
-        public string Name { get; set; }
-            
-
-        [DisplayName("Aktif Mi ?")]
-        [Required(ErrorMessage = "{0} Boş Geçilemez")]
+        [Required]
         public bool IsActive { get; set; }
 
     }

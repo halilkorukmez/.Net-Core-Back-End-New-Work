@@ -1,3 +1,4 @@
+using AutoMapper;
 using DataAccess.DataContext;
 using DataAccess.Entityframework.Dal.ProductDal;
 using DataAccess.UnitOfWork;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Services.AutoMapper.Profiles;
 using Services.ProductDataServices;
 using Services.ServicesExtensions;
 
@@ -26,7 +28,16 @@ namespace Api
         {
 
             services.AddControllers();
-            services.AddAutoMapper(typeof(Startup));
+            #region AutoMapper
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfiles());
+            });
+            var mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            #endregion AutoMapper
             services.LoadMyServices();
 
             services.AddDbContext<ShopDataContext, ShopDataContext>(ServiceLifetime.Transient);

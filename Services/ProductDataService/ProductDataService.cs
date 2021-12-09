@@ -31,16 +31,20 @@ namespace Services.ProductDataServices
             var product = _mapper.Map<Product>(productAddDto);
             await _unitOfWork.Products.AddAsync(product)
                 .ContinueWith(t => _unitOfWork.SaveAsync());
-            
-            return new Result(ResultStatus.Success, $"{productAddDto.Name} Ürünü Eklendi.");
+            //await _unitOfWork.SaveAsync();
+            return new Result(ResultStatus.Success, $"{productAddDto.Name} adlı ürün başarıyla eklenmiştir.");
         }
+
+
+
+
 
         public async Task<IResult> DeleteAsync(Guid productid)
         {
             var product = await _unitOfWork.Products.GetAsync(p => p.Id == productid);
             if (product != null)
             {
-                product.IsActive = true;
+                product.IsActive = false;
                 await _unitOfWork.Products.DeleteAsync(product).ContinueWith(t => _unitOfWork.SaveAsync());
                 return new Result(ResultStatus.Success, $"{product.Name} silindi.");
             }
@@ -63,8 +67,8 @@ namespace Services.ProductDataServices
 
         public async Task<IDataResult<ProductListDto>> GetListAsync()
         {
-            var product = await _unitOfWork.Products.GetListAsync(p => !p.IsActive);
-            if (product.Count > -1)
+            var product = await _unitOfWork.Products.GetListAsync(p => p.IsActive == true);
+            if (product.Count >= 0)
             {
                 return new DataResult<ProductListDto>(ResultStatus.Success, new ProductListDto 
                 {
@@ -83,7 +87,7 @@ namespace Services.ProductDataServices
             if (product != null)
             {
                 product.Name = productUpdateDto.Name;
-                product.IsActive = productUpdateDto.IsActive;
+               
                 await _unitOfWork.Products.UpdateAsync(product).ContinueWith(t => _unitOfWork.SaveAsync());
                 return new Result(ResultStatus.Success, $"{productUpdateDto.Name} Ürünü Güncellendi."); 
             }

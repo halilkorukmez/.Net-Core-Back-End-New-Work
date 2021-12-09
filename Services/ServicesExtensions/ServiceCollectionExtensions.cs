@@ -19,6 +19,7 @@ namespace Services.ServicesExtensions
             serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
             serviceCollection.AddScoped<IProductDataService,ProductDataService>();
             serviceCollection.AddScoped<IProductDal,EfProductDal>();
+
            
             return serviceCollection;
            

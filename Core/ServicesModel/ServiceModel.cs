@@ -34,7 +34,7 @@ namespace Core.ServicesModel
 
         public async Task DeleteAsync(T entity)
         {
-            await Task.Run(() => { _context.Set<T>().Remove(entity); }); // Manuel Async
+            await Task.Run(() => { _context.Set<T>().Update(entity); }); // Manuel Async
         }
 
         public async Task<T> GetAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)

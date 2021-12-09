@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Services.AutoMapper.Profiles
 {
-    public class ProductProfiles : Profile
+    public class MappingProfiles : Profile
     {
-        public ProductProfiles()
+        public MappingProfiles()
         {
             CreateMap<ProductAddDto, Product>(); //.ForMember(dest => dest.DateTime,opt => opt.MapFrom(x =>DateTime.Now));
             CreateMap<ProductUpdateDto, Product>();

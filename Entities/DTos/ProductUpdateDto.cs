@@ -21,9 +21,7 @@ namespace Entities.DTos
         public string Name { get; set; }
 
 
-        [DisplayName("Aktif Mi ?")]
-        [Required(ErrorMessage = "{0} Boş Geçilemez")]
-        public bool IsActive { get; set; }
+     
 
     }
 }

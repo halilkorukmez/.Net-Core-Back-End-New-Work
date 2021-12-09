@@ -10,7 +10,7 @@ namespace DataAccess.DataContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"Server=DESKTOP-147B76S;Database=KursDeneme;Trusted_Connection=True");
+                @"Server=DESKTOP-147B76S;Database=Test1;Trusted_Connection=True");
         }
 
         public DbSet<Product> Products { get; set; }
