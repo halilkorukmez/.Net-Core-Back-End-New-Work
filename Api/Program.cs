@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog.Web;
 
 
 namespace Api
@@ -15,21 +16,40 @@ namespace Api
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            NLog.Logger logger = NLogBuilder.ConfigureNLog("Nlog.config").GetCurrentClassLogger();
+            try
+            {
+                logger.Debug("init main");
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, "Stopped program because of exception");
+                throw;
+            }
+            finally
+            {
+                NLog.LogManager.Shutdown();
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureLogging(conf => 
+                .ConfigureLogging(logging =>
                 {
-                    conf.ClearProviders();
-                    conf.AddDebug();
-                    conf.AddConsole();
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(LogLevel.Trace);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services.AddHostedService<WorkerService>();
+                })
+                .UseNLog()
+                .UseWindowsService();
     }
     
 }
