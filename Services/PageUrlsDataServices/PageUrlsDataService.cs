@@ -32,14 +32,17 @@ namespace Services.PageUrlsDataServices
         public async Task<IResult> AddAsync(PageUrlsAddDtos pageUrlsAddDtos)
         {
             var pageUrl = _mapper.Map<PageUrl>(pageUrlsAddDtos); 
-            if (_context.PageUrls.Any(x => x.UrlAddress != pageUrlsAddDtos.UrlAddress))
-            {
+            if (_context.PageUrls.Any(x => x.UrlAddress == pageUrlsAddDtos.UrlAddress))
+            {return new Result(ResultStatus.Error, $"{pageUrl.UrlAddress}  Daha Önceden Alınmış");
+               
+                
+            }
+            else
+            
                 await _unitOfWork.PageUrl.AddAsync(pageUrl)
                     .ContinueWith(t => _unitOfWork.SaveAsync());
                 return new Result(ResultStatus.Success, $"{pageUrl.UrlName} Adlı URL Başarıyla Eklenmiştir.");
-                
-            }
-            return new Result(ResultStatus.Error, $"{pageUrl.UrlAddress}  Daha Önceden Alınmış");
+            
             
         }
 

@@ -19,7 +19,6 @@ namespace Entities.Users
         [MaxLength(12)]
         [MinLength(6)]
         public string Password { get; set; }
-        
         public IList<PageUrl>? PageUrls { get; set; }
     }
 }

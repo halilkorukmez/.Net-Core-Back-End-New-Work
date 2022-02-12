@@ -31,17 +31,9 @@ namespace Api.Controllers
             public async Task<string> GetTokenAsync(string userName, string password)
             {
                 var users = await _loginService.LoginAsync(userName, password);
-                if (users == null)
+                if (users != null)
                 {
-                    return ("UYARI : Kullanıcı Bilgilerinizi Eksiksiz Girdiğinizden Emin Olun. Eğer Eksiksiz Doldurduysanız :" +
-                            Environment.NewLine
-                            + "DİKKAT : Servis Kullanım Süreniz Dolmuştur ");
-
-
-
-                }
-                else
-                {
+                   
                     var token = _tokenService.GetToken(users);
                     var response = new
                     {
@@ -52,7 +44,11 @@ namespace Api.Controllers
                         PageUrlList = users.Data.User.PageUrls
                     };
                     return JsonConvert.SerializeObject(response);
+
+
                 }
+                else
+                    return ("Kullanıcı Bulunamadı");
 
             }
         }
