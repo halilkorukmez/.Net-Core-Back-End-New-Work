@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
-using Entities;
-using Entities.DTos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities.PageUrls;
+using Entities.PageUrls.PageUrlsDtos;
+using Entities.Users;
+using Entities.Users.UserDtos;
 
 namespace Services.AutoMapper.Profiles
 {
@@ -13,8 +15,10 @@ namespace Services.AutoMapper.Profiles
     {
         public MappingProfiles()
         {
-            CreateMap<ProductAddDto, Product>(); //.ForMember(dest => dest.DateTime,opt => opt.MapFrom(x =>DateTime.Now));
-            CreateMap<ProductUpdateDto, Product>();
+            CreateMap<PageUrlsAddDtos, PageUrl>(); 
+            CreateMap<PageUrlsUpdateDtos, PageUrl>();
+            CreateMap<UserAddDto, User>();
+            CreateMap<UserUpdateDto, User>();
         }
     }
 }

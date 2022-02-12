@@ -1,16 +1,17 @@
+using Api.Worker;
 using AutoMapper;
+using Core.Extentions.Middleware;
 using DataAccess.DataContext;
-using DataAccess.Entityframework.Dal.ProductDal;
-using DataAccess.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Services.AutoMapper.Profiles;
-using Services.ProductDataServices;
 using Services.ServicesExtensions;
+using Services.TokenServices;
 
 namespace Api
 {
@@ -39,10 +40,11 @@ namespace Api
 
             #endregion AutoMapper
             services.LoadMyServices();
-
-            services.AddDbContext<ShopDataContext, ShopDataContext>(ServiceLifetime.Transient);
-
-
+            services.Configure<JwtSetting>(Configuration.GetSection("JwtSetting"));
+            services.AddDbContextPool<WorkerDataContext>(options => options
+                .UseNpgsql(Configuration.GetConnectionString("TestConnectionString"))
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+           
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
@@ -62,7 +64,7 @@ namespace Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

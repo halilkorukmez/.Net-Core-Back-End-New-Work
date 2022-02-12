@@ -1,13 +1,14 @@
 ﻿using Core.ServicesModel;
 using DataAccess.DataContext;
-using Entities;
+using Entities.PageUrls;
+
 
 
 namespace DataAccess.Entityframework.Dal.ProductDal
 {
-   public class EfProductDal : ServiceModel<Product>, IProductDal
+   public class EfPageUrlDal : ServiceModel<PageUrl>, IPageUrlDal
     {
-        public EfProductDal(ShopDataContext dbContext) : base(dbContext)
+        public EfPageUrlDal(WorkerDataContext dbContext) : base(dbContext)
         {
 
         }

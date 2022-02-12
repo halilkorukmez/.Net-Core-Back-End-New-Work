@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.DTos
+namespace Entities.PageUrls.PageUrlsDtos
 {
-    public class ProductDto :DtoGetBase
+    public class PageUrlsListDtos : DtoGetBase
     {
-        public Product Product { get; set; }
+        public IList<PageUrl> PageUrls { get; set; }
     }
 }

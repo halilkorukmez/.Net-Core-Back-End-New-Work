@@ -1,10 +1,10 @@
 ﻿using Core.ServicesModel;
-using Entities;
+using Entities.PageUrls;
 
 
 namespace DataAccess.Entityframework.Dal.ProductDal
 {
-    public interface IProductDal : IServiceModel<Product>
+    public interface IPageUrlDal : IServiceModel<PageUrl>
     {
        
     }

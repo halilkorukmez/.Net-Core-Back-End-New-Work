@@ -9,6 +9,7 @@ namespace Core.Model
     public class BaseModel : IEntity
     {
         public DateTime? CreateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
         public Guid Id { get; set; }
         public bool IsActive { get; set; }
         public BaseModel()
