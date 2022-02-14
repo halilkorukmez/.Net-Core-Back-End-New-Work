@@ -40,7 +40,7 @@ namespace Api
 
             #endregion AutoMapper
             services.LoadMyServices();
-            services.AddHostedService<MyBackgroundService>();
+            services.AddHostedService<WorkerService>();
             services.Configure<JwtSetting>(Configuration.GetSection("JwtSetting"));
             services.AddDbContextPool<WorkerDataContext>(options => options
                 .UseNpgsql(Configuration.GetConnectionString("TestConnectionString"))

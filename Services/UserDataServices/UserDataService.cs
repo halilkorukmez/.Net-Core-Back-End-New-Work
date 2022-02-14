@@ -58,7 +58,7 @@ namespace Services.UserDataServices
         public async Task<IResult> AddAsync(UserAddDto userAddDto)
         {
             var user = _mapper.Map<User>(userAddDto);
-            if (_context.Users.Any(x => x.UserName != userAddDto.UserName))
+            if (_context.Users.Any(x => x.UserName == userAddDto.UserName))
                 return new Result(ResultStatus.Error, $"{user.UserName} Kullanıcı Adı Daha Önceden Alınmış");
            
             else

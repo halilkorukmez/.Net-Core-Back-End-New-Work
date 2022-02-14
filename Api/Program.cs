@@ -46,7 +46,7 @@ namespace Api
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddHostedService<MyBackgroundService>();
+                    services.AddHostedService<WorkerService>();
                 })
                 .UseNLog()
                 .UseWindowsService();
