@@ -11,7 +11,6 @@ namespace DataAccess.DataContext
             
         }
         public DbSet<User> Users { get; set; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -21,13 +20,11 @@ namespace DataAccess.DataContext
                     .EnableSensitiveDataLogging(true)
                     .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             }
-
             base.OnConfiguring(optionsBuilder);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserMapping());
-
         }
 
 

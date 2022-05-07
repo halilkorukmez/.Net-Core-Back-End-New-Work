@@ -1,13 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Core.Aspect.Caching;
-using Core.Aspect.Loging;
-using Core.CrossCuttingConcerns.Logging.Log4Net;
-using DataAccess.Mapping;
-using Entities.Users.UserDtos;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using Services.MediatR.Users.Commands.Create;
 using Services.MediatR.Users.Commands.Update;
 using Services.MediatR.Users.Queries.Get;
@@ -39,7 +32,7 @@ namespace Api.Controllers
             return null;
 
         }
-        [LogAspect(typeof(FileLogger))]
+        
         [HttpGet("GetList")]
         public async Task<IActionResult> GetList()
         {
@@ -55,7 +48,6 @@ namespace Api.Controllers
         }
         
         [HttpPost("Create")]
-        [LogAspect(typeof(FileLogger))]
         public async Task<IActionResult> Add([FromBody]CreateCommad createProduct)
         {
             if (createProduct != null)

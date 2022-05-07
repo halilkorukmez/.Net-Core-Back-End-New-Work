@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Entities.Users;
-using Entities.Users.UserDtos;
 using Services.MediatR.Users.Commands.Create;
 using Services.MediatR.Users.Commands.Update;
-using Services.MediatR.Users.Queries.GetList;
 
 namespace Services.AutoMapper.Profiles
 {
@@ -13,7 +11,7 @@ namespace Services.AutoMapper.Profiles
         {
             CreateMap<CreateCommad, User>();
             CreateMap<UpdateCommand, User>();
-            CreateMap<UserListDto, User>();
+            
         }
     }
 }

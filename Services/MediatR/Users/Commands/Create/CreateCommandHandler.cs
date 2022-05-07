@@ -2,8 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Core.Aspect.Loging;
-using Core.CrossCuttingConcerns.Logging.Log4Net;
+using Core.Aspect.Caching;
 using Core.Utilities.Result.Abstract;
 using Core.Utilities.Result.ComplexTypes;
 using Core.Utilities.Result.Concrete;
@@ -12,8 +11,6 @@ using Entities.Users;
 using MediatR;
 
 namespace Services.MediatR.Users.Commands.Create;
-
-[LogAspect(typeof(FileLogger))]
 public class CreateCommandHandler : IRequestHandler<CreateCommad, IResult>
 {
     private readonly IUnitOfWork _unitOfWork;

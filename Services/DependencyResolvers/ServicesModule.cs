@@ -14,6 +14,7 @@ public class ServicesModule : ICoreModule
     {
         services.AddMemoryCache();
         services.AddTransient<IUnitOfWork, UnitOfWork>();
+       
         services.AddSingleton<RedisServer>();
         services.AddSingleton<ICacheManager, RedisCacheService>();
         services.AddMediatR(Assembly.GetExecutingAssembly());
