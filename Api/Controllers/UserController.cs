@@ -16,19 +16,18 @@ namespace Api.Controllers
         [HttpGet("Get")]
         public async Task<IActionResult> Get(Guid id)
         {
-            if (id != null)
+            try
             {
-                try
+                if (id != null)
                 {
                     var user = await _mediator.Send(new GetQuery{Id = id});
                     return Ok(user);
                 }
-                catch (Exception e)
-                {
-                    return BadRequest();
-                } 
             }
-
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
             return null;
 
         }
@@ -43,44 +42,44 @@ namespace Api.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message);
             }
         }
         
         [HttpPost("Create")]
         public async Task<IActionResult> Add([FromBody]CreateCommad createProduct)
         {
-            if (createProduct != null)
+            try
             {
-                try
+                if (createProduct != null)
                 {
                     var user = await _mediator.Send(createProduct);
                     return Ok(user);
                 }
-                catch (Exception e)
-                {
-                    return BadRequest();
-                }
             }
-            return null;
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            return BadRequest(error:"Error");
         }
         
         [HttpPut("Update")]
         public async Task<IActionResult> Update([FromBody]UpdateCommand updateCommand)
         {
-            if (updateCommand != null)
+            try
             {
-                try
+                if (updateCommand != null)
                 {
                     var user = await _mediator.Send(updateCommand);
                     return Ok(user);
                 }
-                catch (Exception e)
-                {
-                    return BadRequest();
-                }
             }
-            return null;
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            return BadRequest(error:"Error");
         }
     }
     

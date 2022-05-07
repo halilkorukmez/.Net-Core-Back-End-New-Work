@@ -35,7 +35,7 @@ public class UpdateCommandHandler : IRequestHandler<UpdateCommand, IResult>
                 await _unitOfWork.Users.UpdateAsync(userdata).ContinueWith(t => _unitOfWork.SaveAsync()); 
                 return new Result(ResultStatus.Success, $"{userdata.UserName} Kulanıcı Güncellendi."); 
             }
-            return new Result(ResultStatus.Error, "Güncellenemedi");
+            return new Result(ResultStatus.Error, "Kullanıcı Güncellenemedi");
         }
         catch (Exception e)
         {

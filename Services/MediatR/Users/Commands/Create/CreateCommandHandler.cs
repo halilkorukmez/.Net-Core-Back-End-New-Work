@@ -32,7 +32,7 @@ public class CreateCommandHandler : IRequestHandler<CreateCommad, IResult>
                     .ContinueWith(t => _unitOfWork.SaveAsync());
                 return new Result(ResultStatus.Success, $"{users.Name} Adlı Kullanıcı Başarıyla Eklenmiştir.");
             }
-            return new Result(ResultStatus.Error, "Eklenmedi");
+            return new Result(ResultStatus.Error, "Kullanıcı Eklenemedi");
         }
         catch (Exception e)
         {
