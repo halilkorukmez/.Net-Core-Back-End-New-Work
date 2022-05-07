@@ -1,6 +1,5 @@
 ﻿using DataAccess.Mapping;
 using Microsoft.EntityFrameworkCore;
-using Entities.PageUrls;
 using Entities.Users;
 
 namespace DataAccess.DataContext
@@ -11,8 +10,6 @@ namespace DataAccess.DataContext
         {
             
         }
-
-        public DbSet<PageUrl> PageUrls { get; set; }
         public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -29,7 +26,6 @@ namespace DataAccess.DataContext
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new PageUrlsMapping());
             modelBuilder.ApplyConfiguration(new UserMapping());
 
         }

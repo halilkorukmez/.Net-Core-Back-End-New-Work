@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Entities.PageUrls;
-using Entities.PageUrls.PageUrlsDtos;
 using Entities.Users;
 using Entities.Users.UserDtos;
+using Services.MediatR.Users.Commands.Create;
+using Services.MediatR.Users.Commands.Update;
+using Services.MediatR.Users.Queries.GetList;
 
 namespace Services.AutoMapper.Profiles
 {
@@ -15,10 +11,9 @@ namespace Services.AutoMapper.Profiles
     {
         public MappingProfiles()
         {
-            CreateMap<PageUrlsAddDtos, PageUrl>(); 
-            CreateMap<PageUrlsUpdateDtos, PageUrl>();
-            CreateMap<UserAddDto, User>();
-            CreateMap<UserUpdateDto, User>();
+            CreateMap<CreateCommad, User>();
+            CreateMap<UpdateCommand, User>();
+            CreateMap<UserListDto, User>();
         }
     }
 }

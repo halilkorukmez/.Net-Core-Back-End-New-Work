@@ -1,6 +1,7 @@
-using Api.Worker;
 using AutoMapper;
+using Core.Extentions;
 using Core.Extentions.Middleware;
+using Core.Utilities.IocContainer;
 using DataAccess.DataContext;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,8 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Services.AutoMapper.Profiles;
-using Services.ServicesExtensions;
-using Services.TokenServices;
+using Services.DependencyResolvers;
 
 namespace Api
 {
@@ -39,9 +39,10 @@ namespace Api
             services.AddSingleton(mapper);
 
             #endregion AutoMapper
-            services.LoadMyServices();
-            services.AddHostedService<WorkerService>();
-            services.Configure<JwtSetting>(Configuration.GetSection("JwtSetting"));
+            services.AddDependencyResolvers(new ICoreModule[] 
+            {
+                new ServicesModule()
+            });
             services.AddDbContextPool<WorkerDataContext>(options => options
                 .UseNpgsql(Configuration.GetConnectionString("TestConnectionString"))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));

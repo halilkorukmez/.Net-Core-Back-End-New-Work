@@ -28,6 +28,7 @@ namespace Core.Utilities.Result.Concrete
             ResultStatus = resultStatus;
             Data = data;
         }
+
         public T Data { get; }
 
         public ResultStatus ResultStatus { get; }

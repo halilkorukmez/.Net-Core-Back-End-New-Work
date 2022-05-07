@@ -1,65 +1,95 @@
 using System;
 using System.Threading.Tasks;
+using Core.Aspect.Caching;
+using Core.Aspect.Loging;
+using Core.CrossCuttingConcerns.Logging.Log4Net;
+using DataAccess.Mapping;
 using Entities.Users.UserDtos;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Services.UserDataServices;
+using Microsoft.Extensions.DependencyInjection;
+using Services.MediatR.Users.Commands.Create;
+using Services.MediatR.Users.Commands.Update;
+using Services.MediatR.Users.Queries.Get;
+using Services.MediatR.Users.Queries.GetList;
+
 
 namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseApiController
     {
-        private readonly IUserDataService _userService;
-
-        public UserController(IUserDataService userService)
+        [HttpGet("Get")]
+        public async Task<IActionResult> Get(Guid id)
         {
-            _userService = userService;
+            if (id != null)
+            {
+                try
+                {
+                    var user = await _mediator.Send(new GetQuery{Id = id});
+                    return Ok(user);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest();
+                } 
+            }
+
+            return null;
+
         }
-
-
-
-        [HttpGet]
-        [Route("[action]")]
+        [LogAspect(typeof(FileLogger))]
+        [HttpGet("GetList")]
         public async Task<IActionResult> GetList()
         {
-            var result = await _userService.GetListAsync();
-            if (result != null)
-                return Ok(result);
-            return BadRequest();
+            try
+            {
+                var response = await _mediator.Send(new GetListQuery());
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
-
-        [HttpGet]
-        [Route("[action]")]
-        public async Task<IActionResult> GetById(Guid id)
+        
+        [HttpPost("Create")]
+        [LogAspect(typeof(FileLogger))]
+        public async Task<IActionResult> Add([FromBody]CreateCommad createProduct)
         {
-            var result = await _userService.GetAsync(id);
-            if (result != null)
-                return Ok(result);
-            return BadRequest();
+            if (createProduct != null)
+            {
+                try
+                {
+                    var user = await _mediator.Send(createProduct);
+                    return Ok(user);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest();
+                }
+            }
+            return null;
         }
-
-        [HttpPost]
-        [Route("[action]")]
-        public async Task<IActionResult> AddAsync([FromBody]UserAddDto userAddDto)
+        
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update([FromBody]UpdateCommand updateCommand)
         {
-            var result = await _userService.AddAsync(userAddDto);
-            if (result != null)
-                return Ok(result);
-            return BadRequest();
-
+            if (updateCommand != null)
+            {
+                try
+                {
+                    var user = await _mediator.Send(updateCommand);
+                    return Ok(user);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest();
+                }
+            }
+            return null;
         }
-
-        [HttpPut]
-        [Route("[action]")]
-        public async Task<IActionResult> UpdateAsync([FromBody] UserUpdateDto userUpdateDto)
-        {
-            var result = await _userService.UpdateAsync(userUpdateDto);
-            if (result != null)
-                return Ok(result);
-            return BadRequest();
-        }
-
-     
     }
+    
 }
