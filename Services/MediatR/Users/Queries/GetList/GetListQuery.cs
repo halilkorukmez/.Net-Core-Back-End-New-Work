@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Services.MediatR.Users.Queries.GetList;
 
-public class GetListQuery : IRequest<DataResult<UserListDto>>
+public class GetListQuery : IRequest<DataResult<List<UserDto>>>
 {
     
 }

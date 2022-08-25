@@ -28,12 +28,9 @@ public class UpdateCommandHandler : IRequestHandler<UpdateCommand, IResult>
             var userdata = await _unitOfWork.Users.GetAsync(p => p.Id == request.Id);
             if (userdata != null)
             {
-                userdata.UserName = request.UserName; 
-                userdata.Password = request.Password; 
-                userdata.IsActive = request.IsActive; 
-                userdata.UpdateDate = request.UpdateDate = DateTime.Now;
-                await _unitOfWork.Users.UpdateAsync(userdata).ContinueWith(t => _unitOfWork.SaveAsync()); 
-                return new Result(ResultStatus.Success, $"{userdata.UserName} Kulanıcı Güncellendi."); 
+                var updateUser = _mapper.Map<User>(request);
+                await _unitOfWork.Users.UpdateAsync(updateUser).ContinueWith(t => _unitOfWork.SaveAsync()); 
+                return new Result(ResultStatus.Success, $"{updateUser.UserName} Kulanıcı Güncellendi."); 
             }
             return new Result(ResultStatus.Error, "Kullanıcı Güncellenemedi");
         }

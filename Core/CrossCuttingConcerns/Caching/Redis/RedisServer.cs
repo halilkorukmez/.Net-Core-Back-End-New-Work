@@ -18,7 +18,7 @@ public class RedisServer
         _connectionMultiplexer = ConnectionMultiplexer.Connect(_configurationString);
         if (!_connectionMultiplexer.IsConnected)
         { 
-            throw new Exception("ConnectionMultiplexer not connected! Please check configuration settings in appsettings.json");
+            throw new Exception();
         }
         _database = _connectionMultiplexer.GetDatabase(_currentDatabaseId);
     }
@@ -42,7 +42,7 @@ public class RedisServer
                     var redisPortConfigurationSection = configuration.GetSection("RedisConfiguration:Port");
                     if (redisHostConfigurationSection == null || redisPortConfigurationSection == null)
                     { 
-                        throw new Exception("Redis configuration informations can not be null. Please check appsettings.json file.");
+                        throw new Exception();
                     }
                     _configurationString = $"{redisHostConfigurationSection.Value}:{redisPortConfigurationSection.Value}";
                 }

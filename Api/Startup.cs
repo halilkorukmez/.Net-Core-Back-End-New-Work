@@ -1,4 +1,3 @@
-using AutoMapper;
 using Core.Extentions;
 using Core.Extentions.Middleware;
 using Core.Utilities.IocContainer;
@@ -10,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Services.AutoMapper.Profiles;
 using Services.DependencyResolvers;
 
 namespace Api
@@ -29,16 +27,6 @@ namespace Api
         {
 
             services.AddControllers();
-            #region AutoMapper
-
-            var mapperConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new MappingProfiles());
-            });
-            var mapper = mapperConfig.CreateMapper();
-            services.AddSingleton(mapper);
-
-            #endregion AutoMapper
             services.AddDependencyResolvers(new ICoreModule[] 
             {
                 new ServicesModule()

@@ -18,18 +18,14 @@ namespace Api.Controllers
         {
             try
             {
-                if (id != null)
-                {
-                    var user = await _mediator.Send(new GetQuery{Id = id});
-                    return Ok(user);
-                }
+                if (id != Guid.Empty)
+                    return Ok(await _mediator.Send(new GetQuery {Id = id}));
+                return BadRequest();
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-            return null;
-
         }
         
         [HttpGet("GetList")]
@@ -37,8 +33,7 @@ namespace Api.Controllers
         {
             try
             {
-                var response = await _mediator.Send(new GetListQuery());
-                return Ok(response);
+                return Ok(await _mediator.Send(new GetListQuery()));
             }
             catch (Exception e)
             {
@@ -52,16 +47,13 @@ namespace Api.Controllers
             try
             {
                 if (createProduct != null)
-                {
-                    var user = await _mediator.Send(createProduct);
-                    return Ok(user);
-                }
+                    return Ok(await _mediator.Send(createProduct));
+                return BadRequest();
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-            return BadRequest(error:"Error");
         }
         
         [HttpPut("Update")]
@@ -70,16 +62,13 @@ namespace Api.Controllers
             try
             {
                 if (updateCommand != null)
-                {
-                    var user = await _mediator.Send(updateCommand);
-                    return Ok(user);
-                }
+                    return Ok(await _mediator.Send(updateCommand));
+                return BadRequest();
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-            return BadRequest(error:"Error");
         }
     }
     
